@@ -6,9 +6,8 @@
 
 # Your code goes here
 
-for i in range(5, 50, 7):
+for i in range(5,50,7):
 	print(i)
-	
 """
 python3 20loop.py
 5
