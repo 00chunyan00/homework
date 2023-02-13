@@ -7,16 +7,25 @@
 
 # Note: you are not allowed to import any library except sys
 import sys
-print(sys.argv)
-total = 0
-count1 = len(sys.argv)-1
-sum1 = 0
-arr = sys.argv[1:]
+
+data = []
 for val in sys.argv[1:]:
+	data.append(float(val))
+total = 0
+count1 = len(data)
+sum1 = 0
+
+for val in data:
 	total += float(val)
 	mean = f'{total/count1:.3f}'
-arr.sort()
-median = arr[count1 // 2]
+data.sort()
+mid = count1 // 2 
+if count1 % 2 == 1: 
+	median = data[mid]
+
+else:
+	median = (data[mid-1] + data[mid]) / 2
+
 for i in range(1, len(sys.argv)):
 	sum1 += (float(sys.argv[i]) - float(mean)) ** 2
 print('Count:', count1)
@@ -25,8 +34,7 @@ print('Maximum:',float(max(sys.argv)))
 print('Mean:', f'{total/count1:.3f}')
 print('Std. dev:', f'{(sum1 / count1) ** 0.5:.3f}')
 print('Median', f'{float(median):.3f}')
-#print('Maximum: ', max(sta))
-#print('Mean: ', sum1/len(sta)+1)
+
 """
 python3 30stats.py 3 1 4 1 5
 Count: 5
