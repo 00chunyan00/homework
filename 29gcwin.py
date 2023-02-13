@@ -25,7 +25,6 @@
 #if nt == 'G' or nt =='C'
 seq = 'ACGACGCAGGAGGAGAGTTTCAGAGATCACGAATACATCCATATTACCCAGAGAGAG'
 w = 11
-
 for i in range(len(seq)-w+1):
 	win = seq[i:i+w]
 	GC = 0
