@@ -24,30 +24,44 @@ import sys
 import mcb185
 
 #function for average KD score
-def ave_hydrophobicity(reading_frame): #defining the function here
-	hydrophobicity = 0
-	amino_acids = 'ACDEFGHIKLMNPQRSTVWY' #this is a string
-	kd_score = [1.8, 2.5, -3.5, -3.5, 2.8, -0.4, -3.2, 4.5, -3.9, 3.8, 1.9, -3.5, -1.6, -3.5, -4.5, -0.8, -0.7, 4.2, -0.9, -1.3] #this is a list
+def hydrop(window):
+	score = 0
+	for aa in window:
+		if   aa == 'A': score += 1.8
+		elif aa == 'C': score += 2.5
+		elif aa == 'D': score += -3.5
+		elif aa == 'E': score += -3.5
+		elif aa == 'F': score += 2.8
+		elif aa == 'G': score += -0.4
+		elif aa == 'H': score += -3.2
+		elif aa == 'I': score += 4.5
+		elif aa == 'K': score += -3.9
+		elif aa == 'L': score += 3.8
+		elif aa == 'M': score += 1.9
+		elif aa == 'N': score += -3.5
+		elif aa == 'P': score += -1.6
+		elif aa == 'Q': score += -3.5
+		elif aa == 'R': score += -4.5
+		elif aa == 'S': score += -0.8
+		elif aa == 'T': score += -0.7
+		elif aa == 'V': score += 4.2
+		elif aa == 'W': score += -0.9
+		elif aa == 'Y': score += -1.3
+	return score/len(window)		
 
-#for loop, go through each amino acid within the reading frame
-	for aa in range(len(reading_frame)): 
-#going through the list of amino acids and add the appropriate kd score
-		hydrophobicity += kd_score[amino_acids.find(reading_frame[aa])] 
-	return hydrophobicity/len(reading_frame) #return the average hydrophobicity 
 
 #function for transmembrane 
-def hydro_region(seq, f, t):
-	for i in range(len(seq) - f + 1): 
-		frame = seq[i : i + f]
+def hydro_region(seq, reading_frame, threshold):
+	for i in range(len(seq) - reading_frame + 1): #make sure all the read is within reading frame. 
+		frame = seq[i : i + readinh_frame]
 		
 		if 'P' in frame: continue #proline will not be in transmembrane
-		elif ave_hydrophobicity(frame) < t: continue
+		elif ave_hydrophobicity(frame) < threshold: continue
 		else:
 				return True
-	return False
 	
 for defline, seq in mcb185.read_fasta(sys.argv[1]):
-	if hydro_region(seq[0:30], 8, 2.5) and hydro_region(seq[30:], 11, 2.0):
+	if hydro_region(seq[:30], 8, 2.5) and hydro_region(seq[30:], 11, 2.0):
 		print(defline)
 
 
