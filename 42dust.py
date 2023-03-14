@@ -39,7 +39,7 @@ for protein_name, seq in mcb185.read_fasta(sys.argv[1]):
 	for i in range(len(seq) -reading_frame +1):
 		if entropy_seq(seq[i: i+reading_frame]) < threshold: seq_list[i] = 'N'
 	seq = ''.join(seq_list)
-
+	print(f'>{protein_name}')
 for j in range(0, len(seq), 60):
 	print(seq[j: j+60])
 
